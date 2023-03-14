@@ -1,7 +1,7 @@
 function ExercisePage() {
   return (
     <>
-      <p className="text-xl font-bold"> Exercise </p>
+      <p className="text-xl font-bold">💪 Exercise </p>
     </>
   );
 }

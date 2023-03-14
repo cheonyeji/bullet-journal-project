@@ -1,7 +1,7 @@
 function MemoPage() {
   return (
     <>
-      <p className="text-xl font-bold"> Memo</p>
+      <p className="text-xl font-bold">💬 Memo</p>
     </>
   );
 }

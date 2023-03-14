@@ -2,7 +2,7 @@ import React from "react";
 function HabitsToDoPage() {
   return (
     <>
-      <p className="text-xl font-bold"> Habits & To Do </p>
+      <p className="text-xl font-bold"> ✅ Habits & To Do </p>
     </>
   );
 }

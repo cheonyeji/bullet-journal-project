@@ -2,7 +2,7 @@ import React from "react";
 function DietPage() {
   return (
     <>
-      <p className="text-xl font-bold"> Diet </p>
+      <p className="text-xl font-bold"> 🍚 Diet </p>
     </>
   );
 }
