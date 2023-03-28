@@ -1,7 +1,7 @@
+import CreateContent from "./CreateContent";
 import { useRecoilValue } from "recoil";
 import { contentState } from "../atoms";
-import CreateContent from "./CreateContent";
-import List from "./List";
+import TodayPage from "../pages/TodayPage";
 
 function Form() {
   const contents = useRecoilValue(contentState);
@@ -10,7 +10,7 @@ function Form() {
       <CreateContent />
       <ul>
         {contents.map((content) => (
-          <List key={content.id} {...content} />
+          <TodayPage content={...content} />
         ))}
       </ul>
     </>
