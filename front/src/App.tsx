@@ -1,21 +1,10 @@
-import Form from "./components/Form";
+import MainPage from "./pages/MainPage";
 
 function App() {
-  const today = new Date();
-  const dateString = today.toLocaleDateString("ko-KR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-  const dayName = today.toLocaleDateString("ko-KR", { weekday: "long" });
   return (
-    <>
-      <div>
-        <span className="text-3xl font-bold"> {dateString} </span>
-        <span className="text-xl text-gray-400"> {dayName} </span>
-      </div>
-      <Form />
-    </>
+    <div className="bg-zinc-300 w-screen h-screen flex items-center justify-center">
+      <MainPage />
+    </div>
   );
 }
 
