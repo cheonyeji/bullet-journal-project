@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
-import { contentState } from "../atoms";
+import { contentState, States, Types } from "../atoms";
 
 interface InterfaceForm {
-  type: string;
+  type: Types;
   content: string;
 }
 
@@ -12,7 +12,12 @@ function CreateContent() {
   const { register, handleSubmit, setValue } = useForm<InterfaceForm>();
   const handleValid = (data: InterfaceForm) => {
     setContents((prevContents) => [
-      { text: data.content, id: Date.now(), state: "TODO", type: data.type },
+      {
+        text: data.content,
+        id: Date.now(),
+        state: States.TODO,
+        type: data.type,
+      },
       ...prevContents,
     ]);
     setValue("content", "");
@@ -20,10 +25,10 @@ function CreateContent() {
   return (
     <form onSubmit={handleSubmit(handleValid)}>
       <select {...register("type")}>
-        <option value="diet">🍚</option>
-        <option value="exercise">💪</option>
-        <option value="habitsTodo">✅</option>
-        <option value="memo">💬</option>
+        <option value={Types.DIET}>🍚</option>
+        <option value={Types.EXERCISE}>💪</option>
+        <option value={Types.HABITS_TODO}>✅</option>
+        <option value={Types.MEMO}>💬</option>
       </select>
       <input
         {...register("content", { required: true })}
