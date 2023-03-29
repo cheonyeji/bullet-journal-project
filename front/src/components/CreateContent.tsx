@@ -1,4 +1,3 @@
-import { off } from "process";
 import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import { contentState, States, Types } from "../atoms";
@@ -27,7 +26,7 @@ function CreateContent() {
     <form
       onSubmit={handleSubmit(handleValid)}
       autoComplete="off"
-      className="pt-1"
+      className="pt-1 min-w-fit"
     >
       <select {...register("type")} className="focus:outline-none p-1">
         <option value={Types.DIET}>🍚</option>

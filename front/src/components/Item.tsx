@@ -23,19 +23,19 @@ function Item({ text, state, type, id }: InterfaceContent) {
     <li>
       {state !== "TODO" && (
         <>
-          <span className="line-through">{text}</span>
           <button name="TODO" onClick={onClick}>
             💫
           </button>
+          <span className="line-through">{text}</span>
         </>
       )}
 
       {state === "TODO" && (
         <>
-          <span>{text}</span>
           <button name="DONE" onClick={onClick}>
             💖
           </button>
+          <span>{text}</span>
         </>
       )}
     </li>
