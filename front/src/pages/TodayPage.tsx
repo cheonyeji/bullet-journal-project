@@ -13,7 +13,7 @@ function TodayPage() {
   const habitsTodoContents = useRecoilValue(habitsTodoSelector);
   const memoContents = useRecoilValue(memoSelector);
   return (
-    <>
+    <div className="overflow-y-auto flex-1">
       {dietContents.length !== 0 && (
         <List title="🍚 Diet" contents={dietContents} />
       )}
@@ -26,7 +26,7 @@ function TodayPage() {
       {memoContents.length !== 0 && (
         <List title="💬 Memo" contents={memoContents} />
       )}
-    </>
+    </div>
   );
 }
 
