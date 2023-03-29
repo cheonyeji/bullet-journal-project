@@ -1,4 +1,3 @@
-import React from "react";
 import { useRecoilValue } from "recoil";
 import {
   dietSelector,
@@ -6,18 +5,27 @@ import {
   habitsTodoSelector,
   memoSelector,
 } from "../atoms";
-import DietPage from "./DietPage";
-import ExercisePage from "./ExercisePage";
-import HabitsToDoPage from "./HabitsToDoPage";
-import MemoPage from "./MemoPage";
+import List from "../components/List";
 
 function TodayPage() {
+  const dietContents = useRecoilValue(dietSelector);
+  const exerciseContents = useRecoilValue(exerciseSelector);
+  const habitsTodoContents = useRecoilValue(habitsTodoSelector);
+  const memoContents = useRecoilValue(memoSelector);
   return (
     <>
-      {useRecoilValue(dietSelector).length !== 0 && <DietPage />}
-      {useRecoilValue(exerciseSelector).length !== 0 && <ExercisePage />}
-      {useRecoilValue(habitsTodoSelector).length !== 0 && <HabitsToDoPage />}
-      {useRecoilValue(memoSelector).length !== 0 && <MemoPage />}
+      {dietContents.length !== 0 && (
+        <List title="🍚 Diet" contents={dietContents} />
+      )}
+      {exerciseContents.length !== 0 && (
+        <List title="💪 Exercise" contents={exerciseContents} />
+      )}
+      {habitsTodoContents.length !== 0 && (
+        <List title="✅ Habits & To Do" contents={habitsTodoContents} />
+      )}
+      {memoContents.length !== 0 && (
+        <List title="💬 Memo" contents={memoContents} />
+      )}
     </>
   );
 }
