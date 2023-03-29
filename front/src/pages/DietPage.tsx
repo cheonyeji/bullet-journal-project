@@ -1,10 +1,17 @@
-import React from "react";
-import List from "../components/List";
+import { useRecoilValue } from "recoil";
+import { dietSelector } from "../atoms";
+import Item from "../components/Item";
+
 function DietPage() {
+  const contents = useRecoilValue(dietSelector);
   return (
     <>
       <p className="text-xl font-bold"> 🍚 Diet </p>
-      <List />
+      <ul>
+        {contents.map((content) => (
+          <Item key={content.id} {...content} />
+        ))}
+      </ul>
     </>
   );
 }
