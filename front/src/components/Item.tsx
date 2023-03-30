@@ -3,7 +3,7 @@ import { contentState, InterfaceContent } from "../atoms";
 
 function Item({ text, state, type, id }: InterfaceContent) {
   const setContents = useSetRecoilState(contentState);
-  const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const toggleState = (event: React.MouseEvent<HTMLButtonElement>) => {
     const {
       currentTarget: { name },
     } = event;
@@ -19,24 +19,46 @@ function Item({ text, state, type, id }: InterfaceContent) {
       ];
     });
   };
+
+  const removeItem = () => {
+    setContents((prevContents) => {
+      const targetIndex = prevContents.findIndex(
+        (content) => content.id === id
+      );
+      return [
+        ...prevContents.slice(0, targetIndex),
+        ...prevContents.slice(targetIndex + 1),
+      ];
+    });
+  };
   return (
     <li>
       {state !== "TODO" && (
-        <>
-          <button name="TODO" onClick={onClick}>
-            💫
+        <div className="flex-1 group flex justify-between hover:shadow-sm">
+          <div>
+            <button name="TODO" onClick={toggleState} className="mr-1">
+              ✔
+            </button>
+            <span className="line-through">{text}</span>
+          </div>
+          <button onClick={removeItem} className="hidden group-hover:inline">
+            🗑️
           </button>
-          <span className="line-through">{text}</span>
-        </>
+        </div>
       )}
 
       {state === "TODO" && (
-        <>
-          <button name="DONE" onClick={onClick}>
-            💖
+        <div className="flex-1 group flex justify-between hover:shadow-sm">
+          <div>
+            <button name="DONE" onClick={toggleState} className="mr-1">
+              ◼
+            </button>
+            <span>{text}</span>
+          </div>
+          <button onClick={removeItem} className="hidden group-hover:inline">
+            🗑️
           </button>
-          <span>{text}</span>
-        </>
+        </div>
       )}
     </li>
   );
