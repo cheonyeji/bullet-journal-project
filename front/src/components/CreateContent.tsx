@@ -26,7 +26,7 @@ function CreateContent() {
     <form
       onSubmit={handleSubmit(handleValid)}
       autoComplete="off"
-      className="pt-1 min-w-fit"
+      className="pt-1 min-w-fit flex"
     >
       <select {...register("type")} className="focus:outline-none p-1">
         <option value={Types.DIET}>🍚</option>
@@ -38,7 +38,7 @@ function CreateContent() {
         {...register("content", { required: true })}
         type="text"
         placeholder="Write anything you want"
-        className="focus:outline-none focus:bg-slate-100 w-5/6 mr-2 p-1 placeholder:italic"
+        className="focus:outline-none focus:bg-slate-100 flex-1 mr-2 p-1 placeholder:italic"
       />
       <button type="submit">✔</button>
     </form>
