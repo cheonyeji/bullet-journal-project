@@ -12,13 +12,13 @@ function CreateContent() {
   const { register, handleSubmit, setValue } = useForm<InterfaceForm>();
   const handleValid = (data: InterfaceForm) => {
     setContents((prevContents) => [
+      ...prevContents,
       {
         text: data.content,
         id: Date.now(),
         state: States.TODO,
         type: data.type,
       },
-      ...prevContents,
     ]);
     setValue("content", "");
   };
