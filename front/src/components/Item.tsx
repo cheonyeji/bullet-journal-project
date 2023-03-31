@@ -1,3 +1,4 @@
+import { Draggable } from "react-beautiful-dnd";
 import { useSetRecoilState } from "recoil";
 import { contentState, InterfaceContent } from "../atoms";
 
@@ -32,35 +33,59 @@ function Item({ text, state, type, id }: InterfaceContent) {
     });
   };
   return (
-    <li>
+    <>
       {state !== "TODO" && (
-        <div className="flex-1 group flex justify-between hover:shadow-sm">
-          <div>
-            <button name="TODO" onClick={toggleState} className="mr-1">
-              ✔
-            </button>
-            <span className="line-through">{text}</span>
-          </div>
-          <button onClick={removeItem} className="hidden group-hover:inline">
-            🗑️
-          </button>
-        </div>
+        <Draggable draggableId={text} index={id}>
+          {(provided) => (
+            <li
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              className="flex-1 group flex justify-between hover:shadow-sm"
+            >
+              <div>
+                <button name="TODO" onClick={toggleState} className="mr-1">
+                  ✔
+                </button>
+                <span className="line-through">{text}</span>
+              </div>
+              <button
+                onClick={removeItem}
+                className="hidden group-hover:inline"
+              >
+                🗑️
+              </button>
+            </li>
+          )}
+        </Draggable>
       )}
 
       {state === "TODO" && (
-        <div className="flex-1 group flex justify-between hover:shadow-sm">
-          <div>
-            <button name="DONE" onClick={toggleState} className="mr-1">
-              ◼
-            </button>
-            <span>{text}</span>
-          </div>
-          <button onClick={removeItem} className="hidden group-hover:inline">
-            🗑️
-          </button>
-        </div>
+        <Draggable draggableId={text} index={id}>
+          {(provided) => (
+            <li
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              className="flex-1 group flex justify-between hover:shadow-sm"
+            >
+              <div className="flex">
+                <button name="DONE" onClick={toggleState} className="mr-1">
+                  ◼
+                </button>
+                <span>{text}</span>
+              </div>
+              <button
+                onClick={removeItem}
+                className="hidden group-hover:inline"
+              >
+                🗑️
+              </button>
+            </li>
+          )}
+        </Draggable>
       )}
-    </li>
+    </>
   );
 }
 
