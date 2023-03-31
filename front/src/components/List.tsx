@@ -10,8 +10,8 @@ function List({ title, contents }: ListProps) {
   return (
     <Droppable droppableId={title}>
       {(provided) => (
-        <div className="pt-1">
-          <p className="text-xl font-bold"> {title}</p>
+        <div className="pt-2">
+          <p className="text-lg font-bold"> {title}</p>
           <ul ref={provided.innerRef} {...provided.droppableProps}>
             {contents.map((content) => (
               <Item key={content.id} {...content} />
