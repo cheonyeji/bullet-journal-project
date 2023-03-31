@@ -17,6 +17,7 @@ function List({ title, contents }: ListProps) {
               <Item key={content.id} {...content} />
             ))}
           </ul>
+          {provided.placeholder}
         </div>
       )}
     </Droppable>
