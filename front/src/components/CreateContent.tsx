@@ -1,25 +1,45 @@
 import { useForm } from "react-hook-form";
-import { useSetRecoilState } from "recoil";
-import { contentState, States, Types } from "../atoms";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  contentState,
+  contentWithTypeSelector,
+  States,
+  typesState,
+} from "../atoms";
 
 interface InterfaceForm {
-  type: Types;
+  type: string;
   content: string;
 }
 
 function CreateContent() {
-  const setContents = useSetRecoilState(contentState);
+  const [contents, setContents] = useRecoilState(contentState);
+  const setContentWithTypeSelector = useSetRecoilState(contentWithTypeSelector);
+  const types = useRecoilValue(typesState);
   const { register, handleSubmit, setValue } = useForm<InterfaceForm>();
+
   const handleValid = (data: InterfaceForm) => {
-    setContents((prevContents) => [
-      ...prevContents,
-      {
+    if (
+      Object.keys(contents).length === 0 ||
+      Object.keys(contents).length !== types.length
+    ) {
+      // 최초 렌더링이거나 type이 새롭게 추가된 경우 types에서 값을 받아와서 셋팅
+      setContentWithTypeSelector();
+    }
+    setContents((allContents) => {
+      // allContents 받아와서 수정해야되는 key의 value만 가져와서 그 뒤에 붙여주기
+      const newContent = {
         text: data.content,
         id: Date.now(),
         state: States.TODO,
         type: data.type,
-      },
-    ]);
+      };
+      console.log(allContents);
+      return {
+        ...allContents,
+        [data.type]: [...allContents[data.type], newContent],
+      };
+    });
     setValue("content", "");
   };
   return (
@@ -29,10 +49,11 @@ function CreateContent() {
       className="pt-1 min-w-fit flex"
     >
       <select {...register("type")} className="focus:outline-none p-1">
-        <option value={Types.DIET}>🍚</option>
-        <option value={Types.EXERCISE}>💪</option>
-        <option value={Types.HABITS_TODO}>✅</option>
-        <option value={Types.MEMO}>💬</option>
+        {types.map((type) => (
+          <option key={type} value={type}>
+            {type}
+          </option>
+        ))}
       </select>
       <input
         {...register("content", { required: true })}
