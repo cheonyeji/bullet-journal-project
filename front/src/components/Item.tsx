@@ -1,8 +1,13 @@
+import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useSetRecoilState } from "recoil";
 import { contentState, InterfaceContent } from "../atoms";
 
-function Item({ text, state, type, id }: InterfaceContent) {
+interface InterfaceItemProps extends InterfaceContent {
+  index: number;
+}
+
+function Item({ text, state, type, id, index }: InterfaceItemProps) {
   const setContents = useSetRecoilState(contentState);
   const toggleState = (event: React.MouseEvent<HTMLButtonElement>) => {
     const {
@@ -35,13 +40,13 @@ function Item({ text, state, type, id }: InterfaceContent) {
   return (
     <>
       {state !== "TODO" && (
-        <Draggable draggableId={text} index={id}>
+        <Draggable draggableId={id + ""} index={index}>
           {(provided) => (
             <li
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
-              className="flex-1 group flex justify-between hover:shadow-sm"
+              className="flex-1 group flex justify-between hover:shadow-sm mb-1"
             >
               <div>
                 <button name="TODO" onClick={toggleState} className="mr-1">
@@ -61,13 +66,13 @@ function Item({ text, state, type, id }: InterfaceContent) {
       )}
 
       {state === "TODO" && (
-        <Draggable draggableId={text} index={id}>
+        <Draggable draggableId={text} index={index}>
           {(provided) => (
             <li
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
-              className="flex-1 group flex justify-between hover:shadow-sm"
+              className="flex-1 group flex justify-between hover:shadow-sm mb-1"
             >
               <div className="flex">
                 <button name="DONE" onClick={toggleState} className="mr-1">
@@ -89,4 +94,4 @@ function Item({ text, state, type, id }: InterfaceContent) {
   );
 }
 
-export default Item;
+export default React.memo(Item);
