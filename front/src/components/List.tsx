@@ -5,16 +5,17 @@ import { Droppable } from "react-beautiful-dnd";
 type ListProps = {
   title: string;
   contents: InterfaceContent[];
+  listId: string;
 };
-function List({ title, contents }: ListProps) {
+function List({ title, contents, listId }: ListProps) {
   return (
-    <Droppable droppableId={title}>
+    <Droppable droppableId={listId}>
       {(provided) => (
         <div className="pt-2">
           <p className="text-lg font-bold"> {title}</p>
           <ul ref={provided.innerRef} {...provided.droppableProps}>
-            {contents.map((content) => (
-              <Item key={content.id} {...content} />
+            {contents.map((content, index) => (
+              <Item key={content.id} index={index} {...content} />
             ))}
           </ul>
           {provided.placeholder}
