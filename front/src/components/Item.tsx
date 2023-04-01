@@ -10,31 +10,48 @@ interface InterfaceItemProps extends InterfaceContent {
 function Item({ text, state, type, id, index }: InterfaceItemProps) {
   const setContents = useSetRecoilState(contentState);
   const toggleState = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const {
-      currentTarget: { name },
-    } = event;
-    setContents((prevContents) => {
-      const targetIndex = prevContents.findIndex(
+    setContents((allContents) => {
+      const {
+        currentTarget: { name },
+      } = event;
+      const targetIndex = allContents[type].findIndex(
         (content) => content.id === id
       );
+
+      const copyTargetTypeContents = [...allContents[type]];
       const newContent = { text, id, type, state: name as any };
-      return [
-        ...prevContents.slice(0, targetIndex),
-        newContent,
-        ...prevContents.slice(targetIndex + 1),
-      ];
+      copyTargetTypeContents.splice(targetIndex, 1);
+      copyTargetTypeContents.splice(targetIndex, 0, newContent);
+
+      return {
+        ...allContents,
+        [type]: copyTargetTypeContents,
+      };
     });
   };
 
   const removeItem = () => {
-    setContents((prevContents) => {
-      const targetIndex = prevContents.findIndex(
+    // setContents((prevContents) => {
+    //   const targetIndex = prevContents.findIndex(
+    //     (content) => content.id === id
+    //   );
+    //   return [
+    //     ...prevContents.slice(0, targetIndex),
+    //     ...prevContents.slice(targetIndex + 1),
+    //   ];
+    // });
+
+    setContents((allContents) => {
+      const targetIndex = allContents[type].findIndex(
         (content) => content.id === id
       );
-      return [
-        ...prevContents.slice(0, targetIndex),
-        ...prevContents.slice(targetIndex + 1),
-      ];
+      const copyTargetTypeContents = [...allContents[type]];
+      copyTargetTypeContents.splice(targetIndex, 1);
+
+      return {
+        ...allContents,
+        [type]: copyTargetTypeContents,
+      };
     });
   };
   return (
