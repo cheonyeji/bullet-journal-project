@@ -7,7 +7,7 @@ interface InterfaceItemProps extends InterfaceContent {
   index: number;
 }
 
-function Item({ text, state, type, id, index }: InterfaceItemProps) {
+function Item({ text, state, type, id, index, dueDate }: InterfaceItemProps) {
   const setContents = useSetRecoilState(contentState);
   const toggleState = (event: React.MouseEvent<HTMLButtonElement>) => {
     setContents((allContents) => {
@@ -19,7 +19,7 @@ function Item({ text, state, type, id, index }: InterfaceItemProps) {
       );
 
       const copyTargetTypeContents = [...allContents[type]];
-      const newContent = { text, id, type, state: name as any };
+      const newContent = { text, id, type, dueDate, state: name as any };
       copyTargetTypeContents.splice(targetIndex, 1);
       copyTargetTypeContents.splice(targetIndex, 0, newContent);
 

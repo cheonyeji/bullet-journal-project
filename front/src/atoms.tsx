@@ -10,11 +10,18 @@ export interface InterfaceContent {
   id: number;
   state: States;
   type: string;
+  dueDate: Date;
 }
 
 type InterfaceContentState = {
   [key in string]: InterfaceContent[];
 };
+
+const today = new Date();
+export const dateState = atom<Date>({
+  key: "date",
+  default: today,
+});
 
 export const typesState = atom<string[]>({
   key: "type",
@@ -24,6 +31,34 @@ export const typesState = atom<string[]>({
 export const contentState = atom<InterfaceContentState>({
   key: "content",
   default: {},
+});
+
+const isSameDate = (date1: Date, date2: Date) => {
+  return (
+    date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate()
+  );
+};
+
+export const contentByDateSelector = selector({
+  key: "contentByDateSelector",
+  get: ({ get }) => {
+    const contents = get(contentState);
+    const date = get(dateState);
+    const types = get(typesState);
+
+    const contentByDate: InterfaceContentState = {};
+    types.map((type) => (contentByDate[type] = []));
+
+    Object.keys(contents).map(
+      (type) =>
+        (contentByDate[type] = contents[type].filter((content) =>
+          isSameDate(content.dueDate, date)
+        ))
+    );
+    return contentByDate;
+  },
 });
 
 export const contentWithTypeSelector = selector({

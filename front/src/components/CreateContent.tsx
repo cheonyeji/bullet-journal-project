@@ -3,6 +3,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   contentState,
   contentWithTypeSelector,
+  dateState,
   States,
   typesState,
 } from "../atoms";
@@ -13,6 +14,7 @@ interface InterfaceForm {
 }
 
 function CreateContent() {
+  const date = useRecoilValue(dateState);
   const [contents, setContents] = useRecoilState(contentState);
   const setContentWithTypeSelector = useSetRecoilState(contentWithTypeSelector);
   const types = useRecoilValue(typesState);
@@ -33,6 +35,7 @@ function CreateContent() {
         id: Date.now(),
         state: States.TODO,
         type: data.type,
+        dueDate: date,
       };
       return {
         ...allContents,
