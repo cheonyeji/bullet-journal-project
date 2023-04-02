@@ -34,7 +34,6 @@ function CreateContent() {
         state: States.TODO,
         type: data.type,
       };
-      console.log(allContents);
       return {
         ...allContents,
         [data.type]: [...allContents[data.type], newContent],
