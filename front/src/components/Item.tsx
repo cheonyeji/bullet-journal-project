@@ -31,16 +31,6 @@ function Item({ text, state, type, id, index }: InterfaceItemProps) {
   };
 
   const removeItem = () => {
-    // setContents((prevContents) => {
-    //   const targetIndex = prevContents.findIndex(
-    //     (content) => content.id === id
-    //   );
-    //   return [
-    //     ...prevContents.slice(0, targetIndex),
-    //     ...prevContents.slice(targetIndex + 1),
-    //   ];
-    // });
-
     setContents((allContents) => {
       const targetIndex = allContents[type].findIndex(
         (content) => content.id === id
