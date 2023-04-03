@@ -1,3 +1,30 @@
+import { useRecoilValue } from "recoil";
+import { contentByDateSelector } from "../atoms";
+import List from "../components/List";
+
+function TodayPage() {
+  const contentByDate = useRecoilValue(contentByDateSelector);
+
+  return (
+    <div className="overflow-y-auto flex-1">
+      {Object.keys(contentByDate).map(
+        (type, index) =>
+          contentByDate[type].length !== 0 && (
+            <List
+              title={type}
+              contents={contentByDate[type]}
+              listId={type}
+              key={index}
+            />
+          )
+      )}
+    </div>
+  );
+}
+
+export default TodayPage;
+
+/*
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { contentByDateSelector, contentState } from "../atoms";
@@ -65,3 +92,5 @@ function TodayPage() {
 }
 
 export default TodayPage;
+
+*/
